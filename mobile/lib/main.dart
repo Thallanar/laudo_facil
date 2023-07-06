@@ -11,6 +11,15 @@ class LaudoEz extends StatefulWidget {
 }
 
 class _LaudoEzState extends State<LaudoEz> {
+  List<Color?> colorsList = [
+    Colors.blue,
+    Colors.green[900],
+    Colors.grey[800],
+    Colors.orange,
+    Colors.purple[900]
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

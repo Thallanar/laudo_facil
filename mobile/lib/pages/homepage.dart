@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           elevation: 10,
           actions: [RightMenuBar()],
-          backgroundColor: Colors.black54,
+          backgroundColor: Colors.black45,
           leading: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () => _openDrawer(),

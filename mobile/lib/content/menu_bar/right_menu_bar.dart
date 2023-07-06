@@ -25,7 +25,8 @@ class _RightMenuBarState extends State<RightMenuBar> {
       icon: Icon(Icons.more_vert),
       itemBuilder: (_) => <PopupMenuEntry>[
         _itemBar(1, 'Ajuda'),
-        _itemBar(2, 'Configurações')
+        _itemBar(2, 'Configurações'),
+        _itemBar(3, 'Sair')
       ],
       onSelected: (selectValue) {
         if(selectValue == 2){
@@ -34,8 +35,6 @@ class _RightMenuBarState extends State<RightMenuBar> {
             MaterialPageRoute(builder: ((context) => ConfigPage()))
           );
           print('Você escolheu a opção Configurações');
-        }else if(selectValue == 3){
-          print('Você escolheu a opção Ouvidoria');
         }else if(selectValue == 1){
           print('Você escolheu a opção Ajuda!');
         }else{

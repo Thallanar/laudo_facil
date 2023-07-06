@@ -29,9 +29,9 @@ class PagSobre extends StatelessWidget {
                 )
               ],
               onSelected: (selectValue) {
-                if (selectValue == 1) {
-                  _launchURL();
-                }
+                // if (selectValue == 1) {
+                //   _launchURL();
+                // }
               },
             )
           ],
@@ -60,11 +60,11 @@ class PagSobre extends StatelessWidget {
   }
 }
 
-_launchURL() async {
-  const url = 'https://unifoa.edu.br';
-  if (await canLaunchUrlString(url)) {
-    await launchUrlString(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
+// _launchURL() async {
+//   const url = 'https://unifoa.edu.br';
+//   if (await canLaunchUrlString(url)) {
+//     await launchUrlString(url);
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }

@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'theme.json';
+import 'package:open_file/open_file.dart';
+
 // import 'package:flutter/rendering.dart';
+
+String choiceDropdown = 'Color 1';
 
 class ConfigPage extends StatefulWidget {
   // const ConfigPage({ Key? key }) : super(key: key);
@@ -12,14 +15,11 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigPageState extends State<ConfigPage> {
-  
+
   String choiceDropdown = 'Color 1';
 
   String choiceDropdownFont = 'FontSize 1';
-
-  Map<String, dynamic> themeColors = jsonDecode("theme.json");
   
-
   bool _value = false;
 
   void _onChanged(bool value){
@@ -27,13 +27,13 @@ class _ConfigPageState extends State<ConfigPage> {
       _value = value;
     });
   }
-
+  
   _divisoes(String texto, double espacamento) {
     return Container(
       margin: EdgeInsets.only(top: espacamento),
       child: Text(
         texto,
-        style: TextStyle(color: Colors.blue),
+        style: TextStyle(color: Colors.black54),
       ),
     );
   }
@@ -87,10 +87,10 @@ class _ConfigPageState extends State<ConfigPage> {
               trailing: DropdownButton<String>(
                 value: choiceDropdown,
                 onChanged: (value) {
-                  setState(() {
-                    choiceDropdown = value!;
-                  });
-                },
+                        setState(() {
+                          choiceDropdown = value!;
+                        });
+                      },
                 items: [
                   _themeColor('Color 1', Colors.orange),
                   _themeColor('Color 2', Colors.blue),
