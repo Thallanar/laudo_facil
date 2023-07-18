@@ -45,13 +45,13 @@ class PagSobre extends StatelessWidget {
               width: 300,
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Image.asset('assets/image/01UniFOA_cor.png'),
+                child: Image.asset('assets/icons/Laudo.png'),
               ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
               child: Text(
-                'Este projeto está sendo desenvolvido pelos alunos André Luiz Gomes e Déborah Fernandes de Araujo, para fins de avaliação das disciplinas de Engenharia de Software, Análise e Projeto Orientado a Objetos e Gestão de Projetos em T.I.',
+                'Projeto com finalidade ao atedimento ao público, na área de medicina!',
                 textAlign: TextAlign.center,
               ),
             )

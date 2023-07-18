@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laudo_ez/pages/auth/auth_page.dart';
 import 'package:laudo_ez/pages/homepage.dart';
 
 void main() => runApp(LaudoEz());
@@ -28,7 +29,8 @@ class _LaudoEzState extends State<LaudoEz> {
         darkTheme: ThemeData.dark(),
         themeMode: ThemeMode.system,
         title: 'Laudo Fácil',
-        home: HomePage()
+        // home: HomePage()
+        home: AuthPage()
       );
   }
 }

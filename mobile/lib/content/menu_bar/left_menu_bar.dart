@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:laudo_ez/pages/pag_consultas.dart';
 import 'package:laudo_ez/pages/pag_historico.dart';
 import 'package:laudo_ez/pages/pag_paciente.dart';
-// import 'package:laudo_ez/pages/pag_sobre.dart';
+import 'package:laudo_ez/pages/pag_sobre.dart';
 
 class LeftMenuBar extends StatefulWidget {
   const LeftMenuBar({Key? key}) : super(key: key);
@@ -49,7 +49,8 @@ class _MenuBarState extends State<LeftMenuBar> {
           drawerHeader,
           _drawerCardContent(Icons.account_circle_rounded, 'Minha Conta', PagPaciente()),
           _drawerCardContent(Icons.library_books_rounded, 'Consultas', PagConsultas()),
-          _drawerCardContent(Icons.history, 'Histórico', HistoryPage())
+          _drawerCardContent(Icons.history, 'Histórico', HistoryPage()),
+          _drawerCardContent(Icons.description_outlined, 'Sobre', PagSobre())
         ],
       ),
     );

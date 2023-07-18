@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../pages/config/pag_config.dart';
+import '../../pages/config/about.dart';
 
 class RightMenuBar extends StatefulWidget {
   const RightMenuBar({Key? key}) : super(key: key);
