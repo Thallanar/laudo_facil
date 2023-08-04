@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 
-import 'package:laudo_ez/models/exames_dummy.dart';
-
 class PagConsultas extends StatefulWidget {
   const PagConsultas({ Key? key }) : super(key: key);
 
@@ -69,14 +67,12 @@ class _PagConsultasState extends State<PagConsultas> {
                       Card(
                         elevation: 15,
                         child: ListTile(
-                          title: Text(
+                          title: const Text(
                             'Documento Exemplo',
                             textAlign: TextAlign.center,
                           ),
                           leading: TextButton(
-                            onPressed: (){
-                              exames.map((ex) => OpenFile.open('assets/image/foto_thais.png'));
-                            },
+                            onPressed: (){},
                             child: Icon(
                               Icons.file_present_rounded,
                               color: Colors.black54,

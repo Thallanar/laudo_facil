@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "981273248425",
+    "project_id": "laudo-ez",
+    "storage_bucket": "laudo-ez.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:981273248425:android:904ad715e65693b6945fb8",
+        "android_client_info": {
+          "package_name": "br.com.thallanar.laudoez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "981273248425-u0k0rh3f33mcip7mkmdt5lmh90b8fi00.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.thallanar.laudoez",
+            "certificate_hash": "ecd06020a84a25361b11158c0b25b43941e50126"
+          }
+        },
+        {
+          "client_id": "981273248425-du0bd922insvla2n8mhhfvmvd2ghja3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjhVkIwD3kCP9vuuwl57N0loUpR6h54As"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "981273248425-du0bd922insvla2n8mhhfvmvd2ghja3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
