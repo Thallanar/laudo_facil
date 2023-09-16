@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:laudo_ez/content/menu_bar/right_menu_bar.dart';
 
-import '../../constructor/user.dart';
 
 class PagPaciente extends StatefulWidget {
   const PagPaciente({Key? key}) : super(key: key);

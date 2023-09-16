@@ -21,17 +21,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: LeftMenuBar(),
+        drawer: const LeftMenuBar(),
         appBar: AppBar(
           centerTitle: true,
           elevation: 10,
-          actions: [RightMenuBar()],
+          actions: const [RightMenuBar()],
           backgroundColor: Colors.black45,
           leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () => _openDrawer(),
           ),
-          title: Text(
+          title: const Text(
             'Laudo Fácil',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Center(child: Text('Em Desenvolvimento'))
+            const Center(child: Text('Em Desenvolvimento'))
           ],
         ));
   }

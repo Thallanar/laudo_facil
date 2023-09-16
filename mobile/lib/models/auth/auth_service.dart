@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../constructor/user.dart';
 
@@ -16,7 +14,7 @@ abstract class AuthService {
     String name,
     String numero,
     DateTime? dataNascimento,
-    String email,
+    String? email,
     String endereco,
     String uf,
     String cidade,
@@ -50,19 +48,22 @@ class AuthFirebaseService implements AuthService {
     }
   });
 
+  @override
   AppUser? get authData {
     return _authData;
   }
 
+  @override
   Stream<AppUser?> get dataChanges {
     return _userStream;
   }
 
+  @override
   Future<void> signup(
     String name,
     String numero,
     DateTime? dataNascimento,
-    String email,
+    String? email,
     String endereco,
     String uf,
     String cidade,
@@ -73,7 +74,7 @@ class AuthFirebaseService implements AuthService {
   ) async {
     final auth = FirebaseAuth.instance;
     UserCredential credential = await auth.createUserWithEmailAndPassword(
-      email: email, 
+      email: email!, 
       password: password
     );
 
@@ -87,7 +88,7 @@ class AuthFirebaseService implements AuthService {
       credential.user!, 
       name, 
       numero, 
-      dataNascimento, 
+      dataNascimento!, 
       endereco,
       uf,
       cidade,
@@ -97,16 +98,18 @@ class AuthFirebaseService implements AuthService {
     await _saveAuthData(_authData!);
   }
 
+  @override
   Future<void> login(
-      String email,
+      String? email,
       String password
     ) async {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email, 
+        email: email!, 
         password: password
       );
     }
 
+  @override
   Future<void> logout() async {
     FirebaseAuth.instance.signOut();
   }
@@ -117,9 +120,9 @@ class AuthFirebaseService implements AuthService {
 
     return docRef.set({
       'name': user.name,
-      'email': user.email,
+      'email': user.email!,
       'numero': user.numero, 
-      'dataNascimento': user.dataNascimento, 
+      'dataNascimento': user.dataNascimento!, 
       'endereco': user.endereco,
       'uf': user.uf,
       'cidade': user.cidade,
@@ -140,9 +143,9 @@ class AuthFirebaseService implements AuthService {
       String? password,
   ]){
     return AppUser(
-      name: name ?? user.displayName ?? user.email!, 
+      name: name ?? user.displayName ?? user.email!.split('@')[0], 
       numero: numero ?? user.phoneNumber!,
-      dataNascimento: dataNascimento, 
+      dataNascimento: dataNascimento!, 
       email: user.email!, 
       endereco: endereco!, 
       uf: uf!, 

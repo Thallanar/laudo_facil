@@ -54,7 +54,7 @@ class LoginOrHomepage extends StatelessWidget {
               if(snapshot.connectionState == ConnectionState.waiting) {
                 return _loadingPage();
               }else{
-                return snapshot.hasData ? HomePage() : LoginPage();
+                return snapshot.hasData ? const HomePage() : const LoginPage();
               }
             },
           );

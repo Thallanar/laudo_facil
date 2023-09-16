@@ -46,6 +46,7 @@ dependencies:
   firebase_storage: ^11.2.5
   firebase_messaging: ^14.6.5
   firebase_core: ^2.15.0
+  intl: ^0.18.1
   
 dev_dependencies:
   json_serializable: ^6.6.2

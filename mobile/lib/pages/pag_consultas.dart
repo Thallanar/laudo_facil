@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
 
 class PagConsultas extends StatefulWidget {
   const PagConsultas({ Key? key }) : super(key: key);

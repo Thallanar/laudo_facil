@@ -1,4 +1,3 @@
-import 'dart:io';
 
 enum AuthMode { SingUp, Login }
 
@@ -7,7 +6,7 @@ class AppUser {
   final String name;
   final String numero;
   final DateTime? dataNascimento;
-  final String email;
+  final String? email;
   final String endereco;
   final String uf;
   final String cidade;
@@ -35,7 +34,7 @@ class AuthData {
   String name = '';
   String numero = '';
   DateTime? dataNascimento;
-  String email = '';
+  String? email = '';
   String endereco = '';
   String uf = '';
   String cidade = '';

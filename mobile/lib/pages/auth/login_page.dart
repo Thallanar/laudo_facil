@@ -16,11 +16,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _handleSubmit(AuthData authData) async {
     try {
+      if(!mounted) return;
       setState(() => _isLoading = true);
 
       if(authData.isLogin){
         await AuthService().login(
-          authData.email,
+          authData.email!,
           authData.password
         );
       }else {
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     }catch(error) {
       print(error.toString());
     }finally {
+      if(!mounted) return;  
       setState(() => _isLoading = false);
     }
   }
@@ -74,22 +76,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          SizedBox(
-            height: 400,
-            width: 400,
-            child: FittedBox(
-              fit: BoxFit.fill,
-              child: Image.asset('assets/icons/Laudo.png'),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 250),
-            child: Center(
-                child: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
-              child: AuthForm(onSubmit: _handleSubmit),
-            )),
-          ),
+          _loginPageState(),
+          if(_isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            )
         ],
       ),
     );
