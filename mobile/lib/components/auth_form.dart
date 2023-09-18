@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:laudo_ez/pages/register/pag_register.dart';
 
 import '../constructor/user.dart';
 
@@ -136,24 +137,22 @@ class _AuthFormState extends State<AuthForm> {
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-              // margin: const EdgeInsets.only(bottom: 70),
-              child:
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    const Text('Não possui uma conta?'),
-                    TextButton(
-                      onPressed: () => setState(() {
-                        _authData.toggleAuthMode();
-                      }),
-                      child: const Text(
-                        'Criar Conta',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ]),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
+                const Text('Não possui uma conta?'),
+                TextButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: ((context) => RegisterFormPage())
+                    )
+                  ),
+                  child: const Text(
+                    'Criar Conta',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ]),
           ],
         )
       ],

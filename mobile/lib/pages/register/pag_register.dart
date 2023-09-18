@@ -1,22 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 import '../../constructor/user.dart';
 
-class RegisterFormPage extends StatelessWidget {
+class RegisterFormPage extends StatefulWidget {
+  @override
+  State<RegisterFormPage> createState() => _RegisterFormPageState();
+}
+
+class _RegisterFormPageState extends State<RegisterFormPage> {
   final _formkey = GlobalKey<FormState>();
+
   final _authData = AuthData();
 
+  final firstPwdController = TextEditingController();
+
+  final secoundPwdController = TextEditingController();
+
   _dataNascimento(){
-    return DateFormat("dd/MM/yyyy").format(_authData.dataNascimento!).toString();
+    DateFormat("dd/MM/yyyy").format(_authData.dataNascimento!).toString();
   }
 
-  _textField(String key, String info1, info2, String text) {
+  _textFieldPersonal(String key, String info1, info2, String text) {
     return TextFormField(
       key: ValueKey(key),
       onChanged: (info1) => info2 = info1,
       decoration: InputDecoration(labelText: text),
       );
+  }
+
+  void comparePwd() {
+    if(firstPwdController != secoundPwdController) {
+      print("As senhas devem ser semelhantes");
+    }
+  }
+
+  @override
+  void dispose() {
+    firstPwdController.dispose();
+    secoundPwdController.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,13 +64,30 @@ class RegisterFormPage extends StatelessWidget {
                   key: _formkey,
                   child: Column(
                     children: [
-                      _textField('name', 'name', _authData.name, "Nome"),
-                      _textField('dataNascimento', 'dataNascimento', _authData.dataNascimento, "Data de Nascimento"),
-                      _textField('endereco', 'post', _authData.endereco, "Endereço"),
-                      _textField('uf', 'uf', _authData.uf, "UF"),
-                      _textField('cidade', 'city', _authData.cidade, "Cidade"),
-                      _textField('bairro', 'bairro', _authData.bairro, "bairro"),
-                      _textField('numero', 'number', _authData.email, "Número"),
+                      _textFieldPersonal('name', 'name', _authData.name, "Nome"),
+                      DateTimeField(
+                        key: const ValueKey('dataNascimento'),
+                        format: DateFormat("dd/MM/yyyy"),
+                        decoration: const InputDecoration(
+                          labelText: 'Data de Nascimento',
+                          hintText: 'dd/MM/aaaa'
+                        ),
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context, 
+                            initialDate: currentValue ?? DateTime.now(),
+                            firstDate: DateTime(1899),
+                            lastDate: DateTime(2100) 
+                          );
+                        },
+                        onSaved: (dataNascimento) => _dataNascimento()[0] = dataNascimento,
+                      ),
+                      _textFieldPersonal('endereco', 'post', _authData.endereco, "Endereço"),
+                      _textFieldPersonal('uf', 'uf', _authData.uf, "UF"),
+                      _textFieldPersonal('cidade', 'city', _authData.cidade, "Cidade"),
+                      _textFieldPersonal('bairro', 'bairro', _authData.bairro, "Bairro"),
+                      _textFieldPersonal('numero', 'number', _authData.numero, "Número para Contato"),
+                      _textFieldPersonal('email', 'email', _authData.email, "E-mail")
                     ],
                   ),
                 ),
@@ -59,15 +100,35 @@ class RegisterFormPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Form(
-                  key: _formkey,
                   child: Column(
                     children: [
-                     _textField('password', 'pwd', _authData.password, 'Senha'),
-                     _textField('confirmacao', 'confirm', _authData.password, 'Confirmar Senha'),
+                      TextFormField(
+                        decoration: const InputDecoration(labelText: "Senha"),
+                        obscureText: true,
+                        controller: firstPwdController
+                      ),
+                      TextFormField(
+                        key: const ValueKey('password'),
+                        obscureText: true,
+                        decoration: const InputDecoration(labelText: "Confirmar Senha"),
+                        controller: secoundPwdController,
+                      )
                     ],
                   ),
                 )
               )
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
             )
           ],
         ),
