@@ -126,8 +126,7 @@ class _AuthFormState extends State<AuthForm> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _socialLoginIcons(
-                const FaIcon(FontAwesomeIcons.facebook), 'Facebook'),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.facebook), 'Facebook'),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.google), 'G-Mail'),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.instagram), 'Instagram'),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.twitter), 'X'),

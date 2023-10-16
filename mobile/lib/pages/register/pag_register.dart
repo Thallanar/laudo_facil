@@ -22,12 +22,15 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
     DateFormat("dd/MM/yyyy").format(_authData.dataNascimento!).toString();
   }
 
-  _textFieldPersonal(String key, String info1, info2, String text) {
+  _textFieldPersonal(String key, String info1, info2, String text, String hint) {
     return TextFormField(
       key: ValueKey(key),
       onChanged: (info1) => info2 = info1,
-      decoration: InputDecoration(labelText: text),
-      );
+      decoration: InputDecoration(
+        labelText: text,
+        hintText: hint
+      ),
+    );
   }
 
   void comparePwd() {
@@ -64,7 +67,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                   key: _formkey,
                   child: Column(
                     children: [
-                      _textFieldPersonal('name', 'name', _authData.name, "Nome"),
+                      _textFieldPersonal('name', 'name', _authData.name, "Nome", 'Insira seu nome'),
                       DateTimeField(
                         key: const ValueKey('dataNascimento'),
                         format: DateFormat("dd/MM/yyyy"),
@@ -82,12 +85,12 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                         },
                         onSaved: (dataNascimento) => _dataNascimento()[0] = dataNascimento,
                       ),
-                      _textFieldPersonal('endereco', 'post', _authData.endereco, "Endereço"),
-                      _textFieldPersonal('uf', 'uf', _authData.uf, "UF"),
-                      _textFieldPersonal('cidade', 'city', _authData.cidade, "Cidade"),
-                      _textFieldPersonal('bairro', 'bairro', _authData.bairro, "Bairro"),
-                      _textFieldPersonal('numero', 'number', _authData.numero, "Número para Contato"),
-                      _textFieldPersonal('email', 'email', _authData.email, "E-mail")
+                      _textFieldPersonal('endereco', 'post', _authData.endereco, "Endereço", 'Rua, número, complemento (se houver)'),
+                      _textFieldPersonal('uf', 'uf', _authData.uf, "UF", ''),
+                      _textFieldPersonal('cidade', 'city', _authData.cidade, "Cidade", ''),
+                      _textFieldPersonal('bairro', 'bairro', _authData.bairro, "Bairro", ''),
+                      _textFieldPersonal('numero', 'number', _authData.numero, "Número para Contato", '(xx) xxxxx-xxxx'),
+                      _textFieldPersonal('email', 'email', _authData.email, "E-mail", 'exemplo@exemplo.com')
                     ],
                   ),
                 ),
@@ -112,6 +115,9 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                         obscureText: true,
                         decoration: const InputDecoration(labelText: "Confirmar Senha"),
                         controller: secoundPwdController,
+                        onChanged: (senha) {
+                          comparePwd();
+                        },
                       )
                     ],
                   ),
