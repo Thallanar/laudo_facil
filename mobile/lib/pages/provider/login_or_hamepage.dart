@@ -47,6 +47,8 @@ class LoginOrHomepage extends StatelessWidget {
       builder: (ctx, snapshot) {
         if(snapshot.connectionState == ConnectionState.waiting) {
           return _loadingPage();
+        } else if (snapshot.hasError) {
+          return const Text('Erro ao iniciar o FireBase');
         } else {
           return StreamBuilder<AppUser?>(
             stream: AuthService().dataChanges,

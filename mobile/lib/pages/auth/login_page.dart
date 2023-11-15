@@ -22,26 +22,12 @@ class _LoginPageState extends State<LoginPage> {
       if(authData.isLogin){
         await AuthService().login(
           authData.email!,
-          authData.password
-        );
-      }else {
-        await AuthService().signup(
-          authData.name,
-          authData.numero, 
-          authData.dataNascimento, 
-          authData.email, 
-          authData.endereco, 
-          authData.uf, 
-          authData.cidade, 
-          authData.bairro, 
-          authData.id, 
-          authData.password
+          authData.password!
         );
       }
     }catch(error) {
       print(error.toString());
     }finally {
-      if(!mounted) return;  
       setState(() => _isLoading = false);
     }
   }
@@ -75,12 +61,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          _loginPageState(),
+        children: <Widget> [
           if(_isLoading)
             const Center(
               child: CircularProgressIndicator(),
             )
+          else
+            _loginPageState(),
         ],
       ),
     );

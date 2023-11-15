@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:laudo_ez/models/auth/auth_service.dart';
 import 'package:laudo_ez/pages/provider/login_or_hamepage.dart';
 import 'package:laudo_ez/pages/register/pag_register.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(LaudoEz());
+void main() => runApp(const LaudoEz());
 
 class LaudoEz extends StatefulWidget {
   const LaudoEz({Key? key}) : super(key: key);

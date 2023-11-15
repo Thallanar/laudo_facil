@@ -48,6 +48,8 @@ dependencies:
   firebase_core: ^2.15.0
   intl: ^0.18.1
   datetime_picker_formfield: ^2.0.1
+  google_sign_in: ^6.1.5
+  flutter_facebook_auth: ^6.0.2
   
 dev_dependencies:
   json_serializable: ^6.6.2

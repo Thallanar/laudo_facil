@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:laudo_ez/pages/register/pag_register.dart';
 
+import 'package:laudo_ez/pages/register/pag_register.dart';
 import '../constructor/user.dart';
+import '../models/auth/auth_service.dart';
 
 class AuthForm extends StatefulWidget {
   final void Function(AuthData) onSubmit;
@@ -41,9 +42,9 @@ class _AuthFormState extends State<AuthForm> {
     );
   }
 
-  _socialLoginIcons(FaIcon icon, String socialMedia) {
+  _socialLoginIcons(FaIcon icon, String socialMedia, onPressed) {
     return IconButton(
-      onPressed: () {},
+      onPressed: onPressed,
       icon: icon,
       tooltip: socialMedia,
     );
@@ -126,11 +127,11 @@ class _AuthFormState extends State<AuthForm> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.facebook), 'Facebook'),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.google), 'G-Mail'),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.instagram), 'Instagram'),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.twitter), 'X'),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.apple), 'ID Apple'),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.facebook), 'Facebook', () { AuthService().facebookLogin(); }),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.google), 'G-Mail', () { AuthService().googleLogin(); }),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.instagram), 'Instagram', () {}),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.twitter), 'X', (){}),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.apple), 'ID Apple', (){}),
           ],
         ),
         Column(
