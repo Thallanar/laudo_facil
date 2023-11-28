@@ -26,4 +26,4 @@ class _LaudoEzState extends State<LaudoEz> {
         home: const LoginOrHomepage()
       );
   }
-}
+}    

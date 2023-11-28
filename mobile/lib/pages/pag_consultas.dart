@@ -22,8 +22,8 @@ class _PagConsultasState extends State<PagConsultas> {
       floatingActionButton: FloatingActionButton(
         hoverElevation: 15,
         elevation: 0,
-        backgroundColor: Colors.black,
-        child: Icon(
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+        child: const Icon(
           Icons.add,
           color: Colors.white
         ),
@@ -37,15 +37,15 @@ class _PagConsultasState extends State<PagConsultas> {
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Documentos'),
-        backgroundColor: Colors.black54,
+        title: const Text('Documentos'),
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
         elevation: 10,
       ),
       body: ListView(
         children: [
           Center(
             child: Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top: 50),
               child: Column(
                 children: [
                   CircleAvatar(
@@ -60,7 +60,7 @@ class _PagConsultasState extends State<PagConsultas> {
             child: Column(
               children: [
                 SingleChildScrollView(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
                       Card(
@@ -72,7 +72,7 @@ class _PagConsultasState extends State<PagConsultas> {
                           ),
                           leading: TextButton(
                             onPressed: (){},
-                            child: Icon(
+                            child: const Icon(
                               Icons.file_present_rounded,
                               color: Colors.black54,
                             )

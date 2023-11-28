@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 String choiceDropdown = 'Color 1';
 
 class ConfigPage extends StatefulWidget {
-  // const ConfigPage({ Key? key }) : super(key: key);
+  const ConfigPage({ Key? key }) : super(key: key);
 
   @override
   State<ConfigPage> createState() => _ConfigPageState();
@@ -31,7 +31,9 @@ class _ConfigPageState extends State<ConfigPage> {
       margin: EdgeInsets.only(top: espacamento),
       child: Text(
         texto,
-        style: TextStyle(color: Colors.black54),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold
+        ),
       ),
     );
   }
@@ -39,13 +41,11 @@ class _ConfigPageState extends State<ConfigPage> {
   _fontes<Object>(String valor, String texto, double tamanho) {
     return DropdownMenuItem(
       value: valor,
-      child: Container(
-        child: Center(
-          child: Text(
-            texto,
-            style: TextStyle(fontSize: tamanho),
-            textAlign: TextAlign.center
-          ),
+      child: Center(
+        child: Text(
+          texto,
+          style: TextStyle(fontSize: tamanho),
+          textAlign: TextAlign.center
         ),
       )
     );
@@ -57,7 +57,7 @@ class _ConfigPageState extends State<ConfigPage> {
         child: FittedBox(
             fit: BoxFit.fill,
             child: Container(
-                constraints: BoxConstraints(maxHeight: 20, maxWidth: 40),
+                constraints: const BoxConstraints(maxHeight: 20, maxWidth: 40),
                 decoration: BoxDecoration(
                   border: Border.all(style: BorderStyle.solid),
                   color: cor,
@@ -68,20 +68,20 @@ class _ConfigPageState extends State<ConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black54,
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
         centerTitle: true,
-        title: Text('Configurações'),
+        title: const Text('Configurações'),
       ),
       body: ListView(
         children: [
           _divisoes('<Temas>', 20),
           Card(
-            margin: EdgeInsets.only(top: 5, bottom: 5),
+            margin: const EdgeInsets.only(top: 5, bottom: 5),
             child: ListTile(
-              title: Text(
+              title: const Text(
                 'Cor Tema',
               ),
-              leading: Icon(Icons.color_lens),
+              leading: const Icon(Icons.color_lens),
               trailing: DropdownButton<String>(
                 value: choiceDropdown,
                 onChanged: (value) {
@@ -100,10 +100,10 @@ class _ConfigPageState extends State<ConfigPage> {
             ),
           ),
           Card(
-              margin: EdgeInsets.only(bottom: 5),
+              margin: const EdgeInsets.only(bottom: 5),
               child: ListTile(
-                  title: Text('Tamanho da Fonte'),
-                  leading: Icon(Icons.text_format),
+                  title: const Text('Tamanho da Fonte'),
+                  leading: const Icon(Icons.text_format),
                   trailing: DropdownButton<String>(
                     value: choiceDropdownFont,
                     onChanged: (value) {
@@ -121,10 +121,10 @@ class _ConfigPageState extends State<ConfigPage> {
             ),
           _divisoes('<Sistema>', 15),
           Card(
-            margin: EdgeInsets.only(top: 5, bottom: 5),
+            margin: const EdgeInsets.only(top: 5, bottom: 5),
             child: ListTile(
-              title: Text('Notificações'),
-              leading: Icon(Icons.notifications),
+              title: const Text('Notificações'),
+              leading: const Icon(Icons.notifications),
               trailing: Switch(
                 activeColor: Colors.green,
                 value: _value,
@@ -136,20 +136,20 @@ class _ConfigPageState extends State<ConfigPage> {
           ),
           _divisoes('<Segurança>', 15),
           Card(
-            margin: EdgeInsets.only(top: 5, bottom: 5),
+            margin: const EdgeInsets.only(top: 5, bottom: 5),
             child: ListTile(
-              title: Text('Autenticação'),
-              leading: Icon(Icons.lock),
-              trailing: Icon(Icons.arrow_forward_ios_rounded),
+              title: const Text('Autenticação'),
+              leading: const Icon(Icons.lock),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
               onTap: (){},
             ),
           ),
           Card(
-            margin: EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(bottom: 5),
             child: ListTile(
-              title: Text('Normas de Privacidade'),
-              leading: Icon(Icons.privacy_tip_outlined),
-              trailing: Icon(Icons.arrow_forward_ios_rounded),
+              title: const Text('Normas de Privacidade'),
+              leading: const Icon(Icons.privacy_tip_outlined),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
               onTap: (){}
             ),
           )

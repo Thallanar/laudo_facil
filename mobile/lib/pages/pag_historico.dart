@@ -12,7 +12,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black54,
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
       ),
     );
   }

@@ -10,10 +10,6 @@ class PagPaciente extends StatefulWidget {
 }
 
 class _PagPacienteState extends State<PagPaciente> {
-  _popUpMenu() {
-    return RightMenuBar();
-  }
-
   _cardInfo(String texto, content){
     return Card(
       child: ListTile(
@@ -30,8 +26,7 @@ class _PagPacienteState extends State<PagPaciente> {
         centerTitle: true,
         title: const Text('Minha Conta'),
         elevation: 10,
-        backgroundColor: Colors.black54,
-        actions: [_popUpMenu()],
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
       ),
       body: ListView(
         children: const [Center(

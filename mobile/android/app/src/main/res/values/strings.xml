@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Configurations of the app -->
+    <string name="facebook_app_id">1060543355295054</string>
+    <!-- The client token is available in Settings > Advanced > Security section of the app dashboard. -->
+    <string name="app_name">Laudo Fácil</string>
+    <string name="fb_login_protocol_scheme">fb1060543355295054</string> 
+    <string name="facebook_client_token">d11ff55e1f70b843c4d34836ac34fb31</string>
+
+    <string name="posts_feed">Posts</string>
+    <string name="logout">Logout</string>
+    <string name="enter_text">Compose a post</string>
+    <string name="profile">Profile</string>
+    <string name="permissions">Permissions</string>
+    <string name="email_permission">Email Permission</string>
+    <string name="user_posts_permission">User Posts Permission</string>
+    <string name="make_post_permission">Make Post Permission</string>
+    <string name="app_permission">Entire App Permission</string>
+    <string name="no_fb_review">Permissions Granted without FB Review</string>
+    <string name="fb_review">Permissions Requiring FB Review</string>
+    <string name="no_email_perm">Email permission not granted</string>
+</resources>

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../content/menu_bar/left_menu_bar.dart';
 import '../content/menu_bar/right_menu_bar.dart';
 
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -26,7 +27,8 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           elevation: 10,
           actions: const [RightMenuBar()],
-          backgroundColor: Colors.black45,
+          backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+          // backgroundColor: const Color.fromRGBO(224, 71, 66, 88),
           leading: IconButton(
             icon: const Icon(Icons.menu),
             onPressed: () => _openDrawer(),
@@ -46,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 width: 500,
                 child: FittedBox(
                   fit: BoxFit.contain,
-                  child: Image.asset('assets/icons/Laudo.png'),
+                  child: Image.asset('assets/icons/Laudo_3.png'),
                 ),
               ),
             ),

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PagSobre extends StatelessWidget {
   const PagSobre({Key? key}) : super(key: key);
+
+  Future<void> _launchURL(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,27 +17,29 @@ class PagSobre extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           elevation: 10,
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Colors.black54,
-          title: Text('Sobre'),
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+          title: const Text('Sobre'),
           actions: [
             PopupMenuButton(
-              offset: Offset(0, 55),
-              // color: Colors.black87,
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               itemBuilder: (_) => [
-                PopupMenuItem(
+                const PopupMenuItem(
+                  value: 1,
                   child: Text(
                     'Site',
-                    // style: TextStyle(color: Colors.white),
                   ),
-                  value: 1,
                 )
               ],
               onSelected: (selectValue) {
-                // if (selectValue == 1) {
-                //   _launchURL();
-                // }
+                if (selectValue == 1) {
+                  final Uri toLaunch = Uri(
+                    scheme: 'https', 
+                    host: 'github.com',
+                    path: 'thallanar/'
+                  );
+                  _launchURL(toLaunch);
+                }
               },
             )
           ],
@@ -43,12 +53,12 @@ class PagSobre extends StatelessWidget {
               width: 300,
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Image.asset('assets/icons/Laudo.png'),
+                child: Image.asset('assets/icons/Laudo_3.png'),
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
-              child: Text(
+              margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+              child: const Text(
                 'Projeto com finalidade ao atedimento ao público, na área de medicina!',
                 textAlign: TextAlign.center,
               ),
@@ -58,11 +68,3 @@ class PagSobre extends StatelessWidget {
   }
 }
 
-// _launchURL() async {
-//   const url = 'https://unifoa.edu.br';
-//   if (await canLaunchUrlString(url)) {
-//     await launchUrlString(url);
-//   } else {
-//     throw 'Could not launch $url';
-//   }
-// }

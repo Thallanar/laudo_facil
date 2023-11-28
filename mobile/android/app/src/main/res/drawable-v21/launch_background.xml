@@ -4,9 +4,12 @@
     <item android:drawable="?android:colorBackground" />
 
     <!-- You can insert your own image assets here -->
-    <item>
+    <item
+        android:width="400dp"
+        android:height="400dp"
+        android:gravity="center">
         <bitmap
-            android:gravity="center"
-            android:src="@drawable/laudo" />
+            android:src="@drawable/laudo"
+            android:antialias="true" />
     </item>
 </layer-list>

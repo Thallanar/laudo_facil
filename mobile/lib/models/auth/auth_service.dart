@@ -145,7 +145,10 @@ class AuthFirebaseService implements AuthService {
 
     try {
       // Inicia o processo de login com o Facebook
-      final LoginResult result = await facebookAuth.login();
+      final LoginResult result = await facebookAuth.login(
+        permissions: ['email', 'public_profile'],
+        loginBehavior: LoginBehavior.nativeWithFallback
+      );
 
       // Verifica se o login foi bem-sucedido
       if (result.status == LoginStatus.success) {
@@ -175,7 +178,6 @@ class AuthFirebaseService implements AuthService {
   @override
   Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
-    
   }
 
   Future<void> _saveAuthData(AppUser user) async {

@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             width: 400,
             child: FittedBox(
               fit: BoxFit.fill,
-              child: Image.asset('assets/icons/Laudo.png'),
+              child: Image.asset('assets/icons/Laudo_3.png'),
             ),
           ),
           Container(

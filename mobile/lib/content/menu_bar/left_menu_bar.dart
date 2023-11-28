@@ -30,11 +30,11 @@ class _MenuBarState extends State<LeftMenuBar> {
   @override
   Widget build(BuildContext context) {
     final drawerHeader = DrawerHeader(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Container(
-          color: Colors.black54,
+          color: const Color.fromRGBO(85, 212, 237, 93),
           alignment: Alignment.center,
-          child: Text(
+          child: const Text(
             'Em Desenvolvimento',
             style: TextStyle(
               color: Colors.white,
@@ -43,20 +43,18 @@ class _MenuBarState extends State<LeftMenuBar> {
           )),
     );
 
-    final drawerItens = Container(
-      child: ListView(
-        children: [
-          drawerHeader,
-          _drawerCardContent(Icons.account_circle_rounded, 'Minha Conta', PagPaciente()),
-          _drawerCardContent(Icons.library_books_rounded, 'Consultas', PagConsultas()),
-          _drawerCardContent(Icons.history, 'Histórico', HistoryPage()),
-          _drawerCardContent(Icons.description_outlined, 'Sobre', PagSobre())
-        ],
-      ),
+    final drawerItens = ListView(
+      children: [
+        drawerHeader,
+        _drawerCardContent(Icons.account_circle_rounded, 'Minha Conta', const PagPaciente()),
+        _drawerCardContent(Icons.library_books_rounded, 'Consultas', const PagConsultas()),
+        _drawerCardContent(Icons.history, 'Histórico', const HistoryPage()),
+        _drawerCardContent(Icons.description_outlined, 'Sobre', const PagSobre())
+      ],
     );
     return Drawer(
-      child: drawerItens,
       elevation: 25,
+      child: drawerItens,
     );
   }
 }
