@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
   _loginPageState() {
     return Scaffold(
       body: Stack(
+        alignment: AlignmentDirectional.topCenter,
         children: [
           SizedBox(
             height: 400,

@@ -6,12 +6,15 @@ import '../../constructor/user.dart';
 import '../../models/auth/auth_service.dart';
 import '../auth/login_page.dart';
 import '../homepage.dart';
+import '../../firebase_options.dart';
 
 class LoginOrHomepage extends StatelessWidget {
   const LoginOrHomepage({Key? key}) : super(key: key);
 
   Future<void> init(BuildContext context) async {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+    );
   }
 
   _loadingPage(){
