@@ -11,7 +11,6 @@ class AppUser {
   final String? uf;
   final String? cidade;
   final String? bairro;
-  final String? id;
 
   final String? password;
 
@@ -24,7 +23,6 @@ class AppUser {
       required this.uf,
       required this.cidade,
       required this.bairro,
-      required this.id,
 
       required this.password,
     });
@@ -39,7 +37,6 @@ class AuthData {
   String? uf = '';
   String? cidade = '';
   String? bairro = '';
-  String? id = '';
 
   String? password = '';
   AuthMode _mode = AuthMode.Login;

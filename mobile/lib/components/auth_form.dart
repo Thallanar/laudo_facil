@@ -53,10 +53,7 @@ class _AuthFormState extends State<AuthForm> {
   Future _onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if(!isValid) return;
-
-    if(_authData.email == null && _authData.isSingUp) {
-      return _showLoginError('Campo Obrigatório!', 'Os campos e-mail e senha são obrigatórios!');
-    }
+    widget.onSubmit(_authData);
   }
 
   @override

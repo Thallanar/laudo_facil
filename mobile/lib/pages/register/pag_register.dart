@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:laudo_ez/components/auth_form.dart';
 
 import '../../constructor/user.dart';
+import '../../models/auth/auth_service.dart';
 
 class RegisterFormPage extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
 
   final secoundPwdController = TextEditingController();
 
+  bool _isLoading = false;
+
   _dataNascimento(){
     DateFormat("dd/MM/yyyy").format(_authData.dataNascimento!).toString();
   }
@@ -25,7 +29,8 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   _textFieldPersonal(String key, String info1, info2, String text, String hint) {
     return TextFormField(
       key: ValueKey(key),
-      onChanged: (info1) => info2 = info1,
+      initialValue: info2,
+      onChanged: (_) => info2 = info1,
       decoration: InputDecoration(
         labelText: text,
         hintText: hint
@@ -46,12 +51,37 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
     super.dispose();
   }
 
+  Future<void> _handleSubmit(AuthData authData) async {
+    try {
+      if(!mounted) return;
+      setState(() => _isLoading = true);
+
+      if(authData.isLogin) {
+        await AuthService().signup(
+          authData.email!,
+          authData.password!,
+          authData.dataNascimento!,
+          authData.bairro!,
+          authData.name, 
+          authData.numero!, 
+          authData.endereco!,
+          authData.uf!,
+          authData.cidade!
+        );
+      }
+    }catch(error) {
+      print(error.toString());
+    }finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Criar Conta'),
-        backgroundColor: Colors.black54,
+        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -70,6 +100,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                       _textFieldPersonal('name', 'name', _authData.name, "Nome", 'Insira seu nome'),
                       DateTimeField(
                         key: const ValueKey('dataNascimento'),
+                        autocorrect: true,
                         format: DateFormat("dd/MM/yyyy"),
                         decoration: const InputDecoration(
                           labelText: 'Data de Nascimento',
@@ -85,7 +116,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
                         },
                         onSaved: (dataNascimento) => _dataNascimento()[0] = dataNascimento,
                       ),
-                      _textFieldPersonal('endereco', 'post', _authData.endereco, "Endereço", 'Rua, número, complemento (se houver)'),
+                      _textFieldPersonal('endereco', 'endereco', _authData.endereco, "Endereço", 'Rua, número, complemento (se houver)'),
                       _textFieldPersonal('uf', 'uf', _authData.uf, "UF", ''),
                       _textFieldPersonal('cidade', 'city', _authData.cidade, "Cidade", ''),
                       _textFieldPersonal('bairro', 'bairro', _authData.bairro, "Bairro", ''),
@@ -126,12 +157,22 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
             ),
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AuthForm(onSubmit: _handleSubmit);
+                    print(_authData.email);
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(Color.fromRGBO(85, 212, 237, 93)),
+                  ),
                   child: const Text(
                     'Registrar',
-                    style: TextStyle(fontSize: 15),
+                    style: TextStyle(
+                      fontSize: 15,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.black
+                      ),        
                   ),
                 ),
               ),

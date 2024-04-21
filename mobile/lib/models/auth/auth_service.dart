@@ -21,7 +21,6 @@ abstract class AuthService {
     String? uf,
     String? cidade,
     String? bairro,
-    String? id,
 
     String password,
   );
@@ -74,7 +73,6 @@ class AuthFirebaseService implements AuthService {
     String? uf,
     String? cidade,
     String? bairro,
-    String? id,
 
     String password,
   ) async {
@@ -182,7 +180,7 @@ class AuthFirebaseService implements AuthService {
 
   Future<void> _saveAuthData(AppUser user) async {
     final store = FirebaseFirestore.instance;
-    final docRef = store.collection('users').doc(user.id);
+    final docRef = store.collection('users').doc(user.name!);
 
     return docRef.set({
       'name': user.name!,
@@ -219,7 +217,6 @@ class AuthFirebaseService implements AuthService {
       bairro: bairro,
 
       password: password, 
-      id: user.uid, 
     );
   }
 }
