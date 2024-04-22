@@ -14,7 +14,7 @@ abstract class AuthService {
 
   Future<void> signup(
     String? name,
-    String? numero,
+    PhoneAuthCredential? numero,
     DateTime? dataNascimento,
     String? email,
     String? endereco,
@@ -66,7 +66,7 @@ class AuthFirebaseService implements AuthService {
   @override
   Future<void> signup(
     String? name,
-    String? numero,
+    PhoneAuthCredential? numero,
     DateTime? dataNascimento,
     String? email,
     String? endereco,
@@ -85,12 +85,14 @@ class AuthFirebaseService implements AuthService {
     if(credential.user == null) return;
 
     // Atualizando informações do usuário
-    await credential.user?.updateDisplayName(name);  
+    await credential.user?.updateDisplayName(name);
+    await credential.user?.updatePhoneNumber(numero!);
 
     //Salavando usuário no banco (ainda não implementado)
     _authData = _toAuthData(
       credential.user!, 
       name!, 
+      email,
       numero!, 
       dataNascimento!, 
       endereco!,
@@ -180,7 +182,7 @@ class AuthFirebaseService implements AuthService {
 
   Future<void> _saveAuthData(AppUser user) async {
     final store = FirebaseFirestore.instance;
-    final docRef = store.collection('users').doc(user.name!);
+    final docRef = store.collection('users').doc(user.id);
 
     return docRef.set({
       'name': user.name!,
@@ -197,7 +199,8 @@ class AuthFirebaseService implements AuthService {
   static AppUser _toAuthData(
     User user, [
       String? name,
-      String? numero,
+      String? email,
+      PhoneAuthCredential? numero,
       DateTime? dataNascimento,
       String? endereco,
       String? uf,
@@ -207,10 +210,11 @@ class AuthFirebaseService implements AuthService {
       String? password,
   ]){
     return AppUser(
+      id: user.uid,
       name: name ?? user.displayName ?? user.email!.split('@')[0], 
-      numero: numero ?? user.phoneNumber,
+      numero: numero,
       dataNascimento: dataNascimento, 
-      email: user.email!, 
+      email: user.email, 
       endereco: endereco, 
       uf: uf, 
       cidade: cidade, 

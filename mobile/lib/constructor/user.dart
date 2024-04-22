@@ -1,10 +1,13 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 enum AuthMode { SingUp, Login }
 
 
 class AppUser {
+  final String id;
   final String? name;
-  final String? numero;
+  final PhoneAuthCredential? numero;
   final DateTime? dataNascimento;
   final String? email;
   final String? endereco;
@@ -15,6 +18,7 @@ class AppUser {
   final String? password;
 
     const AppUser({
+      required this.id,
       required this.name,
       required this.numero,
       required this.dataNascimento,
@@ -30,7 +34,7 @@ class AppUser {
 
 class AuthData {
   String name = '';
-  String? numero = '';
+  PhoneAuthCredential? numero;
   DateTime? dataNascimento;
   String? email = '';
   String? endereco = '';
