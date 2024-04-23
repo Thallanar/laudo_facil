@@ -44,26 +44,27 @@ class PagSobre extends StatelessWidget {
             )
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Image.asset('assets/icons/Laudo_3.png'),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 400,
+                width: 500,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Image.asset('assets/icons/Laudo_3.png'),
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
-              child: const Text(
-                'Projeto com finalidade ao atedimento ao público, na área de medicina!',
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
+              Container(
+                margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+                child: const Text(
+                  'Projeto com a finalidade de atedimento ao público, na área de medicina!',
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ],
+          ),
         ));
   }
 }

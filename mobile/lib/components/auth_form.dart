@@ -127,7 +127,7 @@ class _AuthFormState extends State<AuthForm> {
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.facebook), 'Facebook', () { AuthService().facebookLogin(); }),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.google), 'G-Mail', () { AuthService().googleLogin(); }),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.microsoft), 'Microsoft', () {}),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.twitter), 'X', (){}),
+            _socialLoginIcons(const FaIcon(FontAwesomeIcons.xTwitter), 'X', (){}),
           ],
         ),
         Column(
