@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../constructor/user.dart';
 
@@ -21,6 +23,7 @@ abstract class AuthService {
     String? uf,
     String? cidade,
     String? bairro,
+    File? picture,
 
     String password,
   );
@@ -73,6 +76,7 @@ class AuthFirebaseService implements AuthService {
     String? uf,
     String? cidade,
     String? bairro,
+    File? picture,
 
     String password,
   ) async {
@@ -84,8 +88,13 @@ class AuthFirebaseService implements AuthService {
 
     if(credential.user == null) return;
 
+    // Resgatando foto de usuário
+    final imageName = '${credential.user!.uid}.jpg';
+    final imageURL = await _uploadUserImage(picture, imageName);
+
     // Atualizando informações do usuário
     await credential.user?.updateDisplayName(name);
+    await credential.user?.updatePhotoURL(imageURL);
     await credential.user?.updatePhoneNumber(numero!);
 
     //Salavando usuário no banco (ainda não implementado)
@@ -180,6 +189,15 @@ class AuthFirebaseService implements AuthService {
     await FirebaseAuth.instance.signOut();
   }
 
+  Future<String?> _uploadUserImage(File? image, String imageName) async {
+    if (image == null) return null;
+
+    final storage = FirebaseStorage.instance;
+    final imageRef = storage.ref().child('user_images').child(imageName);
+    await imageRef.putFile(image).whenComplete(() {});
+    return await imageRef.getDownloadURL();
+  }
+
   Future<void> _saveAuthData(AppUser user) async {
     final store = FirebaseFirestore.instance;
     final docRef = store.collection('users').doc(user.id);
@@ -206,6 +224,7 @@ class AuthFirebaseService implements AuthService {
       String? uf,
       String? cidade,
       String? bairro,
+      String? imageURL,
 
       String? password,
   ]){
@@ -219,6 +238,7 @@ class AuthFirebaseService implements AuthService {
       uf: uf, 
       cidade: cidade, 
       bairro: bairro,
+      imageURL: imageURL ?? user.photoURL ?? '',
 
       password: password, 
     );
