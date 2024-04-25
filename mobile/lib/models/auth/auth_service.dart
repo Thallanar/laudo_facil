@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,7 +17,7 @@ abstract class AuthService {
 
   Future<void> signup(
     String? name,
-    PhoneAuthCredential? numero,
+    String? numero,
     DateTime? dataNascimento,
     String? email,
     String? endereco,
@@ -69,7 +70,7 @@ class AuthFirebaseService implements AuthService {
   @override
   Future<void> signup(
     String? name,
-    PhoneAuthCredential? numero,
+    String? numero,
     DateTime? dataNascimento,
     String? email,
     String? endereco,
@@ -95,7 +96,6 @@ class AuthFirebaseService implements AuthService {
     // Atualizando informações do usuário
     await credential.user?.updateDisplayName(name);
     await credential.user?.updatePhotoURL(imageURL);
-    await credential.user?.updatePhoneNumber(numero!);
 
     //Salavando usuário no banco (ainda não implementado)
     _authData = _toAuthData(
@@ -108,6 +108,7 @@ class AuthFirebaseService implements AuthService {
       uf!,
       cidade!,
       bairro!,
+      imageURL
     );
 
     await _saveAuthData(_authData!);
@@ -203,14 +204,15 @@ class AuthFirebaseService implements AuthService {
     final docRef = store.collection('users').doc(user.id);
 
     return docRef.set({
-      'name': user.name!,
-      'email': user.email!,
-      'numero': user.numero!, 
-      'dataNascimento': user.dataNascimento!, 
-      'endereco': user.endereco!,
-      'uf': user.uf!,
-      'cidade': user.cidade!,
-      'bairro': user.bairro!,
+      'name': user.name,
+      'email': user.email,
+      'numero': user.numero, 
+      'dataNascimento': user.dataNascimento, 
+      'endereco': user.endereco,
+      'uf': user.uf,
+      'cidade': user.cidade,
+      'bairro': user.bairro,
+      'imageURL': user.imageURL
     });
   }
 
@@ -218,7 +220,7 @@ class AuthFirebaseService implements AuthService {
     User user, [
       String? name,
       String? email,
-      PhoneAuthCredential? numero,
+      String? numero,
       DateTime? dataNascimento,
       String? endereco,
       String? uf,
@@ -238,7 +240,7 @@ class AuthFirebaseService implements AuthService {
       uf: uf, 
       cidade: cidade, 
       bairro: bairro,
-      imageURL: imageURL ?? user.photoURL ?? '',
+      imageURL: imageURL ?? user.photoURL ?? 'assets/pictures/example.jpg',
 
       password: password, 
     );

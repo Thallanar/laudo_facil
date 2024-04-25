@@ -1,20 +1,29 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import 'package:laudo_ez/components/auth_form.dart';
 import '../../constructor/user.dart';
 
 class RegisterForm extends StatefulWidget {
   final void Function(AuthData) onSubmit;
+  final void Function(File image) onImagePick;
 
-  const RegisterForm({Key? key, required this.onSubmit}) : super(key: key);
+  const RegisterForm( {
+    Key? key, required this.onSubmit, 
+    required this.onImagePick 
+  }) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  File? _image;
+  
   final _formKey = GlobalKey<FormState>();
 
   final _authData = AuthData();
@@ -23,26 +32,31 @@ class _RegisterFormState extends State<RegisterForm> {
 
   final secoundPwdController = TextEditingController();
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 100,
+      maxWidth: 100
+    );
+
+    if(pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+
+    widget.onImagePick(_image!);
+  }
+
   Future _onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if(!isValid) return;
     widget.onSubmit(_authData);
   }
 
-  _dataNascimento(){
-    DateFormat("dd/MM/yyyy").format(_authData.dataNascimento!).toString();
-  }
-
-  _textFieldPersonal(String key, info2, String text, String hint) {
-    return TextFormField(
-      key: ValueKey(key),
-      initialValue: info2,
-      onChanged: (key) => info2 = key,
-      decoration: InputDecoration(
-        labelText: text,
-        hintText: hint
-      ),
-    );
+  Future<void> _photoPermission() async {
+     await Permission.photos.request();
   }
 
   void comparePwd() {
@@ -72,19 +86,36 @@ class _RegisterFormState extends State<RegisterForm> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      // _textFieldPersonal('name', _authData.name, "Nome", 'Insira seu nome'),
+                      CircleAvatar(
+                        radius: 100,
+                        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+                        foregroundImage: _image != null ? FileImage(_image!) : null,
+                        child: IconButton(
+                          icon: const Icon(Icons.image_search_outlined),
+                          iconSize: 40,
+                          onPressed: () async {
+                            _photoPermission();
+                            
+                            if (await Permission.photos.isGranted) {
+                              _pickImage();
+                            }
+                          },
+                        ),
+                      ),
+
                       TextFormField(
                         key: const ValueKey('name'),
                         initialValue: _authData.name,
                         onChanged: (name) => _authData.name = name,
-                        // obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Nome Completo',
                           hintText: 'Escreva seu nome',
                           ),
                       ),
+
                       DateTimeField(
                         key: const ValueKey('dataNascimento'),
+                        initialValue: _authData.dataNascimento,
                         autocorrect: true,
                         format: DateFormat("dd/MM/yyyy"),
                         decoration: const InputDecoration(
@@ -99,24 +130,66 @@ class _RegisterFormState extends State<RegisterForm> {
                             lastDate: DateTime(2100) 
                           );
                         },
-                        onSaved: (dataNascimento) => _authData.dataNascimento = dataNascimento,
+                        onChanged: (dataNascimento) => _authData.dataNascimento = dataNascimento
                       ),
+
+                      TextFormField(
+                        key: const ValueKey('endereco'),
+                        initialValue: _authData.endereco,
+                        onChanged: (endereco) => _authData.endereco = endereco,
+                        decoration: const InputDecoration(
+                          labelText: 'Endereço',
+                          hintText: 'Rua, numero e complemento (caso houver)',
+                          ),
+                      ),
+
+                      TextFormField(
+                        key: const ValueKey('bairro'),
+                        initialValue: _authData.bairro,
+                        onChanged: (bairro) => _authData.bairro = bairro,
+                        decoration: const InputDecoration(
+                          labelText: 'Bairro',
+                          ),
+                      ),
+
+                      TextFormField(
+                        key: const ValueKey('cidade'),
+                        initialValue: _authData.cidade,
+                        onChanged: (cidade) => _authData.cidade = cidade,
+                        decoration: const InputDecoration(
+                          labelText: 'Cidade',
+                          hintText: 'Cidade onda mora',
+                          ),
+                      ),
+
+                      TextFormField(
+                        key: const ValueKey('uf'),
+                        initialValue: _authData.uf,
+                        onChanged: (uf) => _authData.uf = uf,
+                        decoration: const InputDecoration(
+                          labelText: 'UF',
+                        ),
+                      ),
+
+                      TextFormField(
+                        key: const ValueKey('numero'),
+                        initialValue: _authData.numero,
+                        onChanged: (numero) => _authData.numero = numero,
+                        decoration: const InputDecoration(
+                          labelText: 'Número',
+                          hintText: '(xx) xxxxx-xxxx'
+                        ),
+                      ),
+
                       TextFormField(
                         key: const ValueKey('email'),
                         initialValue: _authData.email,
                         onChanged: (email) => _authData.email = email,
-                        // obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'E-mail',
-                          hintText: 'exemplo@exemplo.com',
-                          ),
+                          hintText: 'exemplo@exemplo.com'
+                        ),
                       ),
-                      // _textFieldPersonal('endereco', _authData.endereco, "Endereço", 'Rua, número, complemento (se houver)'),
-                      // _textFieldPersonal('uf', _authData.uf, "UF", ''),
-                      // _textFieldPersonal('cidade', _authData.cidade, "Cidade", ''),
-                      // _textFieldPersonal('bairro', _authData.bairro, "Bairro", ''),
-                      // _textFieldPersonal('numero', _authData.numero, "Número para Contato", '(xx) xxxxx-xxxx'),
-                      // _textFieldPersonal('email', _authData.email, "E-mail", 'exemplo@exemplo.com')
                     ],
                   ),
                 ),
@@ -158,7 +231,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: ElevatedButton(
                   onPressed: () {
                     _onSubmit();
-                    print('${_authData.name}');
+                    _pickImage();
+                    print('${_authData.name} ${_authData.dataNascimento}');
                   },
                   style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(Color.fromRGBO(85, 212, 237, 93)),
@@ -167,7 +241,6 @@ class _RegisterFormState extends State<RegisterForm> {
                     'Registrar',
                     style: TextStyle(
                       fontSize: 15,
-                      // fontWeight: FontWeight.bold,
                       color: Colors.black
                       ),        
                   ),

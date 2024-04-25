@@ -54,8 +54,8 @@ class _PagPacienteState extends State<PagPaciente> {
                                 padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
                                 child: CircleAvatar(
                                   radius: 100,
-                                  backgroundColor: Color.fromRGBO(85, 212, 237, 93),
-                                  foregroundImage: user?.imageURL != null ? NetworkImage('${user!.imageURL}') : null,
+                                  backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+                                  foregroundImage: user?.imageURL != null ? NetworkImage(user!.imageURL) : null,
                                 ),
                               ),
                               _cardInfo('Nome:', user?.name),

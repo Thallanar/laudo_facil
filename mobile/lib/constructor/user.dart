@@ -8,14 +8,14 @@ enum AuthMode { SingUp, Login }
 class AppUser {
   final String id;
   final String? name;
-  final PhoneAuthCredential? numero;
+  final String? numero;
   final DateTime? dataNascimento;
   final String? email;
   final String? endereco;
   final String? uf;
   final String? cidade;
   final String? bairro;
-  final String? imageURL;
+  final String imageURL;
 
   final String? password;
 
@@ -37,7 +37,7 @@ class AppUser {
 
 class AuthData {
   String name = '';
-  PhoneAuthCredential? numero;
+  String? numero;
   DateTime? dataNascimento;
   String? email = '';
   String? endereco = '';
