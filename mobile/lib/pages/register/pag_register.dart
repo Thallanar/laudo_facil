@@ -22,31 +22,10 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
       authData.uf!,
       authData.cidade!,
       authData.bairro!,
+      authData.picture!,
       
       authData.password!,
     );
-    // try {
-    //   if(!mounted) return;
-    //   setState(() => _isLoading = true);
-
-    //   if(authData.isSingUp) {
-    //     await AuthService().signup(
-    //       authData.email!,
-    //       authData.numero!, 
-    //       authData.dataNascimento!,
-    //       authData.password!,
-    //       authData.bairro!,
-    //       authData.name, 
-    //       authData.endereco!,
-    //       authData.uf!,
-    //       authData.cidade!
-    //     );
-    //   }
-    // }catch(error) {
-    //   print(error.toString());
-    // }finally {
-    //   setState(() => _isLoading = false);
-    // }
   }
 
   _registerPageState() {

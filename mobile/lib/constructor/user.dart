@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,6 +15,7 @@ class AppUser {
   final String? uf;
   final String? cidade;
   final String? bairro;
+  final String? imageURL;
 
   final String? password;
 
@@ -27,6 +29,7 @@ class AppUser {
       required this.uf,
       required this.cidade,
       required this.bairro,
+      required this.imageURL,
 
       required this.password,
     });
@@ -41,6 +44,7 @@ class AuthData {
   String? uf = '';
   String? cidade = '';
   String? bairro = '';
+  File? picture;
 
   String? password = '';
   AuthMode _mode = AuthMode.Login;
