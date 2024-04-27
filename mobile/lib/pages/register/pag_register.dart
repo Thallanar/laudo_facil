@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:laudo_ez/components/register_form.dart';
+import '../../components/register_form.dart';
 import '../../models/auth/auth_service.dart';
 import '../../constructor/user.dart';
 
@@ -16,7 +16,7 @@ class RegisterFormPage extends StatefulWidget {
 class _RegisterFormPageState extends State<RegisterFormPage> {
   final _imageFound = AuthData();
 
-  void _handleImagePick(File picture) {
+  void _handleImagePick(File? picture) {
     _imageFound.picture = picture;
   }
 

@@ -10,10 +10,11 @@ import '../../constructor/user.dart';
 
 class RegisterForm extends StatefulWidget {
   final void Function(AuthData) onSubmit;
-  final void Function(File image) onImagePick;
+  final void Function(File? picture) onImagePick;
 
   const RegisterForm( {
-    Key? key, required this.onSubmit, 
+    Key? key, 
+    required this.onSubmit, 
     required this.onImagePick 
   }) : super(key: key);
 
@@ -33,16 +34,17 @@ class _RegisterFormState extends State<RegisterForm> {
   final secoundPwdController = TextEditingController();
 
   Future<void> _pickImage() async {
+    await Permission.photos.isGranted;
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 100,
-      maxWidth: 100
     );
 
     if(pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);
+        print(pickedImage.path);
       });
     }
 
@@ -93,13 +95,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         child: IconButton(
                           icon: const Icon(Icons.image_search_outlined),
                           iconSize: 40,
-                          onPressed: () async {
-                            _photoPermission();
-                            
-                            if (await Permission.photos.isGranted) {
-                              _pickImage();
-                            }
-                          },
+                          onPressed: _pickImage
                         ),
                       ),
 
@@ -232,7 +228,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   onPressed: () {
                     _onSubmit();
                     _pickImage();
-                    print('${_authData.name} ${_authData.dataNascimento}');
+                    print('${_authData.name} ${_authData.dataNascimento} ${_authData.picture.toString()}');
                   },
                   style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(Color.fromRGBO(85, 212, 237, 93)),

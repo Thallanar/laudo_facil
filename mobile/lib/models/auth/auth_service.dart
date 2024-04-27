@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -97,20 +96,21 @@ class AuthFirebaseService implements AuthService {
     await credential.user?.updateDisplayName(name);
     await credential.user?.updatePhotoURL(imageURL);
 
-    //Salavando usuário no banco (ainda não implementado)
+    // Salavando usuário no banco (ainda não implementado)
     _authData = _toAuthData(
-      credential.user!, 
-      name!, 
+      credential.user!,
+      name, 
       email,
-      numero!, 
-      dataNascimento!, 
-      endereco!,
-      uf!,
-      cidade!,
-      bairro!,
+      numero, 
+      dataNascimento, 
+      endereco,
+      uf,
+      cidade,
+      bairro,
       imageURL
     );
 
+    print(_authData?.imageURL);
     await _saveAuthData(_authData!);
     
   }
