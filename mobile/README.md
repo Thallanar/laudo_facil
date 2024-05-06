@@ -4,5 +4,5 @@ Um novo sistema de integração entre instituições da área de saúde com o us
 
 ## First View
 
-![Light Theme](/home/thallanar/Pictures/Screenshots/LightTheme.png) ![Dark Theme](/home/thallanar/Pictures/Screenshots/DarkTheme.png)
+![Light Theme](images/LightTheme.png) ![Dark Theme](images/DarkTheme.png)
 
