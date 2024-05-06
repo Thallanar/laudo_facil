@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:laudo_ez/content/menu_bar/right_menu_bar.dart';
 import 'package:laudo_ez/models/auth/auth_service.dart';
 

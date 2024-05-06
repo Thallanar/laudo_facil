@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -10,12 +11,10 @@ import '../../constructor/user.dart';
 
 class RegisterForm extends StatefulWidget {
   final void Function(AuthData) onSubmit;
-  final void Function(File? picture) onImagePick;
 
   const RegisterForm( {
     Key? key, 
     required this.onSubmit, 
-    required this.onImagePick 
   }) : super(key: key);
 
   @override
@@ -33,6 +32,13 @@ class _RegisterFormState extends State<RegisterForm> {
 
   final secoundPwdController = TextEditingController();
 
+  final TextEditingController _phoneController = TextEditingController();
+
+  final MaskTextInputFormatter _phoneFormatter = MaskTextInputFormatter(
+    mask: '(##) #####-####', 
+    filter: { "#": RegExp(r'[0-9]') } 
+  );
+
   Future<void> _pickImage() async {
     await Permission.photos.isGranted;
     final picker = ImagePicker();
@@ -44,21 +50,15 @@ class _RegisterFormState extends State<RegisterForm> {
     if(pickedImage != null) {
       setState(() {
         _image = File(pickedImage.path);
-        print(pickedImage.path);
+        _authData.picture = _image;
       });
     }
-
-    widget.onImagePick(_image!);
   }
-
+  
   Future _onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if(!isValid) return;
     widget.onSubmit(_authData);
-  }
-
-  Future<void> _photoPermission() async {
-     await Permission.photos.request();
   }
 
   void comparePwd() {
@@ -169,12 +169,14 @@ class _RegisterFormState extends State<RegisterForm> {
 
                       TextFormField(
                         key: const ValueKey('numero'),
+                        controller: _phoneController,
                         initialValue: _authData.numero,
                         onChanged: (numero) => _authData.numero = numero,
                         decoration: const InputDecoration(
-                          labelText: 'Número',
-                          hintText: '(xx) xxxxx-xxxx'
+                          labelText: 'Telefone',
+                          hintText: '(xx) xxxxx-xxxx',
                         ),
+                        inputFormatters: [ _phoneFormatter ],
                       ),
 
                       TextFormField(
@@ -226,9 +228,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: ElevatedButton(
                   onPressed: () {
+
                     _onSubmit();
-                    _pickImage();
-                    print('${_authData.name} ${_authData.dataNascimento} ${_authData.picture.toString()}');
                   },
                   style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(Color.fromRGBO(85, 212, 237, 93)),

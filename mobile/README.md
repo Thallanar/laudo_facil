@@ -1,16 +1,8 @@
-# laudo_ez
+# Laudo Fácil
 
-A new Flutter project.
+Um novo sistema de integração entre instituições da área de saúde com o usuário destinatário (paciente)
 
-## Getting Started
+## First View
 
-This project is a starting point for a Flutter application.
+![Light Theme](/home/thallanar/Pictures/Screenshots/LightTheme.png) ![Dark Theme](/home/thallanar/Pictures/Screenshots/DarkTheme.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

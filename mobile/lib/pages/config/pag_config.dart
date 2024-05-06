@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:flutter/rendering.dart';
-
-String choiceDropdown = 'Color 1';
 
 class ConfigPage extends StatefulWidget {
   const ConfigPage({ Key? key }) : super(key: key);
@@ -13,19 +12,78 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigPageState extends State<ConfigPage> {
-
-  String choiceDropdown = 'Color 1';
-
-  String choiceDropdownFont = 'FontSize 1';
-  
   bool _value = false;
 
-  void _onChanged(bool value){
-    setState((){
+  @override
+  void initState() {
+    super.initState();
+    _updateState();
+  }
+
+  Future<void> _permissionState(bool value) async {
+    await Permission.notification.request();
+
+    if(!value) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) => const AlertDialog(
+          title: Text(
+            'ATENÇÃO!',
+            style: TextStyle(
+              color: Colors.redAccent,
+              fontWeight: FontWeight.bold
+            ),
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            'Para desligar as notificações, é preciso alterar as configurações de sistema. Clique em "CONFIRMAR" para continuar!',
+            textAlign: TextAlign.justify,
+            ),
+          actions: [
+            TextButton(
+              onPressed: openAppSettings, 
+              child: Card(
+                // color: Colors.grey.shade300,
+                elevation: 0,
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Confirmar',
+                    style: TextStyle(
+                      color: Color.fromRGBO(85, 212, 237, 93),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+              )
+            )
+          ],
+        )
+      );
+    } 
+
+    setState(() {
       _value = value;
     });
+    print(value);
   }
-  
+
+  Future<void> _updateState() async {
+    var permissionStatus = await Permission.notification.status;
+
+    if(permissionStatus.isGranted) {
+      var permission = true;
+      setState(() {
+      _value = permission;
+      });
+    }
+
+    print(permissionStatus);
+  }
+
   _divisoes(String texto, double espacamento) {
     return Container(
       margin: EdgeInsets.only(top: espacamento),
@@ -74,51 +132,6 @@ class _ConfigPageState extends State<ConfigPage> {
       ),
       body: ListView(
         children: [
-          _divisoes('<Temas>', 20),
-          Card(
-            margin: const EdgeInsets.only(top: 5, bottom: 5),
-            child: ListTile(
-              title: const Text(
-                'Cor Tema',
-              ),
-              leading: const Icon(Icons.color_lens),
-              trailing: DropdownButton<String>(
-                value: choiceDropdown,
-                onChanged: (value) {
-                        setState(() {
-                          choiceDropdown = value!;
-                        });
-                      },
-                items: [
-                  _themeColor('Color 1', Colors.orange),
-                  _themeColor('Color 2', Colors.blue),
-                  _themeColor('Color 3', Colors.grey[800]),
-                  _themeColor('Color 4', Colors.purple[900]),
-                  _themeColor('Color 5', Colors.green[900])
-                ],
-              ),
-            ),
-          ),
-          Card(
-              margin: const EdgeInsets.only(bottom: 5),
-              child: ListTile(
-                  title: const Text('Tamanho da Fonte'),
-                  leading: const Icon(Icons.text_format),
-                  trailing: DropdownButton<String>(
-                    value: choiceDropdownFont,
-                    onChanged: (value) {
-                      setState(() {
-                        choiceDropdownFont = value!;
-                      });
-                    },
-                    items: [
-                      _fontes('FontSize 1', 'Pequeno', 15),
-                      _fontes('FontSize 2', 'Médio', 22),
-                      _fontes('FontSize 3', 'Grande', 30)
-                    ],
-                  )
-                )
-            ),
           _divisoes('<Sistema>', 15),
           Card(
             margin: const EdgeInsets.only(top: 5, bottom: 5),
@@ -128,9 +141,7 @@ class _ConfigPageState extends State<ConfigPage> {
               trailing: Switch(
                 activeColor: Colors.green,
                 value: _value,
-                onChanged: (bool value) {
-                  _onChanged(value);
-                },
+                onChanged: _permissionState
               ),
             ),
           ),

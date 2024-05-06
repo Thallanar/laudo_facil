@@ -14,12 +14,6 @@ class RegisterFormPage extends StatefulWidget {
 }
 
 class _RegisterFormPageState extends State<RegisterFormPage> {
-  final _imageFound = AuthData();
-
-  void _handleImagePick(File? picture) {
-    _imageFound.picture = picture;
-  }
-
   Future<void> _handleSubmit(AuthData authData) async {
     return await AuthService().signup(
       authData.name,
@@ -44,7 +38,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
           Center(
               child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
-            child: RegisterForm(onSubmit: _handleSubmit, onImagePick: _handleImagePick),
+            child: RegisterForm(onSubmit: _handleSubmit),
           )),
         ],
       ),
