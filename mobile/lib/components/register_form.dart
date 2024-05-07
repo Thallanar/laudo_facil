@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import '../routes/routes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,10 +30,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   final _authData = AuthData();
 
-  final firstPwdController = TextEditingController();
-
-  final secoundPwdController = TextEditingController();
-
   final TextEditingController _phoneController = TextEditingController();
 
   final MaskTextInputFormatter _phoneFormatter = MaskTextInputFormatter(
@@ -58,20 +56,45 @@ class _RegisterFormState extends State<RegisterForm> {
   Future _onSubmit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if(!isValid) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: true, 
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color.fromARGB(250, 250, 255, 255),
+        icon: const Icon(
+          Icons.check_circle_outlined,
+          size: 50,
+        ),
+        iconColor: Colors.green,
+        content: const Text(
+          'Conta criada com sucesso',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pushReplacementNamed(AuthPageRoutes.login_or_homepage), 
+            child: const Text('Ok')
+          )
+        ],
+      )
+    );
+
     widget.onSubmit(_authData);
   }
 
-  void comparePwd() {
-    if(firstPwdController != secoundPwdController) {
-      print("As senhas devem ser semelhantes");
-    }
-  }
+  bool isValidPassword(String password) {
+    // Verifica se a senha contém pelo menos um número, uma letra maiúscula e um caractere especial
+    RegExp digitRegex = RegExp(r'[0-9]');
+    RegExp uppercaseRegex = RegExp(r'[A-Z]');
+    RegExp specialCharRegex = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
 
-  @override
-  void dispose() {
-    firstPwdController.dispose();
-    secoundPwdController.dispose();
-    super.dispose();
+    bool hasDigit = digitRegex.hasMatch(password);
+    bool hasUppercase = uppercaseRegex.hasMatch(password);
+    bool hasSpecialChar = specialCharRegex.hasMatch(password);
+
+    return hasDigit && hasUppercase && hasSpecialChar;
   }
 
   @override
@@ -88,14 +111,17 @@ class _RegisterFormState extends State<RegisterForm> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 100,
-                        backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
-                        foregroundImage: _image != null ? FileImage(_image!) : null,
-                        child: IconButton(
-                          icon: const Icon(Icons.image_search_outlined),
-                          iconSize: 40,
-                          onPressed: _pickImage
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 50, top: 30),
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+                          foregroundImage: _image != null ? FileImage(_image!) : null,
+                          child: IconButton(
+                            icon: const Icon(Icons.image_search_outlined),
+                            iconSize: 40,
+                            onPressed: _pickImage
+                          ),
                         ),
                       ),
 
@@ -177,6 +203,12 @@ class _RegisterFormState extends State<RegisterForm> {
                           hintText: '(xx) xxxxx-xxxx',
                         ),
                         inputFormatters: [ _phoneFormatter ],
+                        validator: (number) {
+                          if(number!.length > 11 && number.length < 10) {
+                            return 'Número iválido';
+                          }
+                          return null;
+                        },
                       ),
 
                       TextFormField(
@@ -187,6 +219,12 @@ class _RegisterFormState extends State<RegisterForm> {
                           labelText: 'E-mail',
                           hintText: 'exemplo@exemplo.com'
                         ),
+                        validator: (email) {
+                          if(!email!.contains('@')) {
+                            return 'E-mail inválido';
+                          }
+                          return null;
+                        },
                       ),
                     ],
                   ),
@@ -206,18 +244,20 @@ class _RegisterFormState extends State<RegisterForm> {
                         key: const ValueKey('password'),
                         obscureText: true,
                         onChanged: (password) => _authData.password = password,
-                        // controller: firstPwdController
                         decoration: const InputDecoration(labelText: "Senha"),
+                        validator: (password) {
+                        if(password == null || password.isEmpty) {
+                          return 'Senha é obrigatória!';
+                        }
+                        if(password.length < 6) {
+                          return 'A senha deve conter pelo menos 6 caracteres!';
+                        }
+                        if (!isValidPassword(password)) {
+                          return 'A senha deve conter pelo menos um número, uma letra maiúscula e um caractere especial!';
+                        }
+                          return null;
+                        }
                       ),
-                      // TextFormField(
-                      //   key: const ValueKey('password'),
-                      //   obscureText: true,
-                      //   decoration: const InputDecoration(labelText: "Confirmar Senha"),
-                      //   controller: secoundPwdController,
-                      //   onChanged: (senha) {
-                      //     comparePwd();
-                      //   },
-                      // )
                     ],
                   ),
                 )
@@ -228,7 +268,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                 child: ElevatedButton(
                   onPressed: () {
-
                     _onSubmit();
                   },
                   style: const ButtonStyle(

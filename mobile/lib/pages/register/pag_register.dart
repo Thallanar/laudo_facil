@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:laudo_ez/pages/provider/login_or_hamepage.dart';
 
 import '../../components/register_form.dart';
 import '../../models/auth/auth_service.dart';
@@ -31,8 +32,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   }
 
   _registerPageState() {
-    return Scaffold(
-      body: Stack(
+    return Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
           Center(
@@ -41,8 +41,7 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
             child: RegisterForm(onSubmit: _handleSubmit),
           )),
         ],
-      ),
-    );
+      );
   }
 
   @override
@@ -52,12 +51,17 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
         title: const Text('Criar Conta'),
         backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginOrHomepage()
+            ) 
+          )
+        ),
       ),
-      body: Stack(
-        children: <Widget> [
-          _registerPageState()
-        ],
-      ),
+      body: _registerPageState(),
     );
   }
 }

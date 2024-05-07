@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:laudo_ez/pages/register/pag_register.dart';
+import 'package:laudo_ez/routes/routes.dart';
 import '../constructor/user.dart';
 import '../models/auth/auth_service.dart';
 
@@ -95,7 +96,6 @@ class _AuthFormState extends State<AuthForm> {
                     child: ElevatedButton(
                       onPressed: () {
                         _onSubmit();
-                        print('você tentou entrar ${_authData.email} ${_authData.password}');
                       },
                       child: const Text('Entrar'),
                     ),
@@ -126,8 +126,6 @@ class _AuthFormState extends State<AuthForm> {
           children: [
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.facebook), 'Facebook', () { AuthService().facebookLogin(); }),
             _socialLoginIcons(const FaIcon(FontAwesomeIcons.google), 'G-Mail', () { AuthService().googleLogin(); }),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.microsoft), 'Microsoft', () {}),
-            _socialLoginIcons(const FaIcon(FontAwesomeIcons.xTwitter), 'X', (){}),
           ],
         ),
         Column(
@@ -138,11 +136,7 @@ class _AuthFormState extends State<AuthForm> {
               children: [
                 const Text('Não possui uma conta?'),
                 TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: ((context) => RegisterFormPage())
-                    )
-                  ),
+                  onPressed: () => Navigator.of(context).pushReplacementNamed(AuthPageRoutes.pag_register),
                   child: const Text(
                     'Criar Conta',
                     style: TextStyle(fontWeight: FontWeight.bold),

@@ -28,8 +28,9 @@ class _ConfigPageState extends State<ConfigPage> {
       showDialog(
         context: context,
         barrierDismissible: true,
-        builder: (BuildContext context) => const AlertDialog(
-          title: Text(
+        builder: (BuildContext context) => AlertDialog(
+          backgroundColor: const Color.fromARGB(250, 250, 255, 255),
+          title: const Text(
             'ATENÇÃO!',
             style: TextStyle(
               color: Colors.redAccent,
@@ -37,26 +38,24 @@ class _ConfigPageState extends State<ConfigPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          content: Text(
+          content: const Text(
             'Para desligar as notificações, é preciso alterar as configurações de sistema. Clique em "CONFIRMAR" para continuar!',
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.center,
             ),
           actions: [
-            TextButton(
-              onPressed: openAppSettings, 
-              child: Card(
-                // color: Colors.grey.shade300,
-                elevation: 0,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Confirmar',
-                    style: TextStyle(
-                      color: Color.fromRGBO(85, 212, 237, 93),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                  backgroundColor: const Color.fromRGBO(85, 212, 237, 93),
+                ),
+                onPressed: openAppSettings,
+                child: const Text(
+                  'Confirmar',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  )
                 ),
               )
             )
@@ -94,32 +93,6 @@ class _ConfigPageState extends State<ConfigPage> {
         ),
       ),
     );
-  }
-
-  _fontes<Object>(String valor, String texto, double tamanho) {
-    return DropdownMenuItem(
-      value: valor,
-      child: Center(
-        child: Text(
-          texto,
-          style: TextStyle(fontSize: tamanho),
-          textAlign: TextAlign.center
-        ),
-      )
-    );
-  }
-
-  _themeColor<Object>(String valor, cor) {
-    return DropdownMenuItem(
-        value: valor,
-        child: FittedBox(
-            fit: BoxFit.fill,
-            child: Container(
-                constraints: const BoxConstraints(maxHeight: 20, maxWidth: 40),
-                decoration: BoxDecoration(
-                  border: Border.all(style: BorderStyle.solid),
-                  color: cor,
-                ))));
   }
 
   @override
